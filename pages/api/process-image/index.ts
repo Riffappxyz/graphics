@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 
   // Fetch the image
   const response = await fetch(url);
-  const buffer = await response.buffer();
+  const buffer = await response.arrayBuffer();
 
   // Convert the image to a suitable format using sharp
   const processedImage = await sharp(buffer).toBuffer();
