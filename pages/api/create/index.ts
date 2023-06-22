@@ -16,7 +16,6 @@ export default async function handler(req, res) {
   const imageBase64 = await response1.text();
   console.log("imageBase64", imageBase64)
 
-
   // Call the /api/create-gif endpoint to create the GIF and upload it to nft.storage
   const response2 = await fetch(`${appUrl}/api/create-gif`, {
     method: 'POST',
