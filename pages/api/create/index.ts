@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   const profilePic = "https://nftstorage.link/ipfs/Qmecvfw8J8eRNwDNhtsqr7dGSKJVa31JPbvx8hBm3dWidh";
 
   // Include the full URL of your application
-  const appUrl = process.env.VERCEL_URL || 'http://localhost:3000';
+  const appUrl = `https://${process.env.VERCEL_URL}` || 'http://localhost:3000';
 
   // Call the /api/process-image endpoint to fetch and process the image
   const response1 = await fetch(`${appUrl}/api/process-image?url=${encodeURIComponent(profilePic)}`);
