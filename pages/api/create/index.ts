@@ -20,11 +20,11 @@ export default async function handler(req, res) {
   console.log("imageBase64", imageBase64)
 
   // Call the /api/create-gif endpoint to create the GIF and upload it to nft.storage
-  // const response2 = await fetch(`${appUrl}/api/create-gif`, {
-  //   method: 'POST',
-  //   headers: { 'Content-Type': 'application/json' },
-  //   body: JSON.stringify({ imageBase64, text: 'Top Collector' }),
-  // }) as any;
+  const response2 = await fetch(`${appUrl}/api/create-gif`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ imageBase64, text: 'Top Collector' }),
+  }) as any;
   // console.log("imageBase64", imageBase64)
   
   // const { cid } = await response2.json();
