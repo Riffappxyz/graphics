@@ -1,8 +1,11 @@
 // /api/main/index.ts
 import fetch from 'node-fetch';
+import { Logger, ILogObj } from "tslog"
+
+const log: Logger<ILogObj> = new Logger({ type: "json", hideLogPositionForProduction: true })
 
 export default async function handler(req, res) {
-  console.log('Handler function started');
+  log.debug(`STARTING FX`)
 
   const profilePic = "https://nftstorage.link/ipfs/Qmecvfw8J8eRNwDNhtsqr7dGSKJVa31JPbvx8hBm3dWidh";
 
@@ -25,7 +28,7 @@ export default async function handler(req, res) {
   console.log("imageBase64", imageBase64)
   
   const { cid } = await response2.json();
-  console.log('Handler function finished');
+  console.log('Handler function finished', cid);
 
   res.status(200).json({ cid });
 }
