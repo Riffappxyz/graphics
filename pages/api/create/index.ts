@@ -2,6 +2,8 @@
 import fetch from 'node-fetch';
 
 export default async function handler(req, res) {
+  console.log('Handler function started');
+
   const profilePic = "https://nftstorage.link/ipfs/Qmecvfw8J8eRNwDNhtsqr7dGSKJVa31JPbvx8hBm3dWidh";
 
   // Include the full URL of your application
@@ -21,7 +23,10 @@ export default async function handler(req, res) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ imageBase64, text: 'Top Collector' }),
   }) as any;
+  console.log("imageBase64", imageBase64)
+  
   const { cid } = await response2.json();
+  console.log('Handler function finished');
 
   res.status(200).json({ cid });
 }
