@@ -9,7 +9,10 @@ export default async function handler(req, res) {
 
   // Call the /api/process-image endpoint to fetch and process the image
   const response1 = await fetch(`${appUrl}/api/process-image?url=${encodeURIComponent(profilePic)}`);
+  console.log("response1", response1)
   const imageBase64 = await response1.text();
+  console.log("imageBase64", imageBase64)
+
 
   // Call the /api/create-gif endpoint to create the GIF and upload it to nft.storage
   const response2 = await fetch(`${appUrl}/api/create-gif`, {
