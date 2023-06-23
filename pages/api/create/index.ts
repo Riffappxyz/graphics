@@ -1,4 +1,5 @@
 // /api/main/index.ts
+import axios from 'axios';
 import fetch from 'node-fetch';
 import { Logger, ILogObj } from "tslog"
 
@@ -20,15 +21,13 @@ export default async function handler(req, res) {
   console.log("imageBase64", imageBase64)
 
   // Call the /api/create-gif endpoint to create the GIF and upload it to nft.storage
-  const response2 = await fetch(`${appUrl}/api/create-gif`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ imageBase64, text: 'Top Collector' }),
-  }) as any;
-  // console.log("imageBase64", imageBase64)
-  
-  const parsed = await response2?.json?.();
-  // console.log('Handler function finished', cid);
-
-  res.status(200).json({ parsed, imageBase64, response2 });
+  try {
+    const response2 = await axios.post(`${appUrl}/api/create-gif`, { imageBase64, text: 'Top Collector' });
+    const { cid } = response2.data;
+    console.log('Handler function finished', cid);
+    res.status(200).json({ cid });
+  } catch (error) {
+    console.error('Failed to create gif', error);
+    return res.status(500).json({ message: 'Failed to create gif', error });
+  }
 }
