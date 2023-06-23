@@ -48,5 +48,5 @@ export default async function handler(req, res) {
     // Upload to nft.storage
     const cid = await client.storeBlob(new File([gifBuffer], 'nft.gif', { type: 'image/gif' }))
 
-    res.status(200).json({ cid: "placeholder" });
+    res.status(200).json({ cid });
 }
