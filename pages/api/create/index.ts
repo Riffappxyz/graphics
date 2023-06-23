@@ -28,6 +28,6 @@ export default async function handler(req, res) {
     res.status(200).json({ cid });
   } catch (error) {
     console.error('Failed to create gif', error);
-    return res.status(500).json({ message: 'Failed to create gif', error });
+    return res.status(200).json({ message: 'Failed to create gif', error });
   }
 }
