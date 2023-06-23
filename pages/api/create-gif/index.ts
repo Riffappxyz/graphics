@@ -28,25 +28,25 @@ export default async function handler(req, res) {
     encoder.setDelay(500);
     encoder.setQuality(10);
 
-    // // Draw the animated text onto the canvas and add the frames to the GIF
-    // for (let i = 0; i < 10; i++) {
-    //     ctx.fillStyle = 'white';
-    //     ctx.fillText(text, 50, 50 + i * 10);
-    //     encoder.addFrame(ctx);
-    // }
+    // Draw the animated text onto the canvas and add the frames to the GIF
+    for (let i = 0; i < 10; i++) {
+        ctx.fillStyle = 'white';
+        ctx.fillText(text, 50, 50 + i * 10);
+        encoder.addFrame(ctx);
+    }
 
-    // encoder.finish();
+    encoder.finish();
 
-    // // Convert the stream to a buffer
-    // const gifBuffer = await new Promise((resolve, reject) => {
-    //     const chunks = [];
-    //     stream.on('data', chunk => chunks.push(chunk));
-    //     stream.on('error', reject);
-    //     stream.on('end', () => resolve(Buffer.concat(chunks)));
-    // }) as any;
+    // Convert the stream to a buffer
+    const gifBuffer = await new Promise((resolve, reject) => {
+        const chunks = [];
+        stream.on('data', chunk => chunks.push(chunk));
+        stream.on('error', reject);
+        stream.on('end', () => resolve(Buffer.concat(chunks)));
+    }) as any;
 
-    // // Upload to nft.storage
-    // const cid = await client.storeBlob(new File([gifBuffer], 'nft.gif', { type: 'image/gif' }))
+    // Upload to nft.storage
+    const cid = await client.storeBlob(new File([gifBuffer], 'nft.gif', { type: 'image/gif' }))
 
     res.status(200).json({ cid: "placeholder" });
 }
