@@ -27,8 +27,8 @@ export default async function handler(req, res) {
   }) as any;
   // console.log("imageBase64", imageBase64)
   
-  // const { cid } = await response2.json();
+  const parsed = await response2?.json?.();
   // console.log('Handler function finished', cid);
 
-  res.status(200).json({ imageBase64, response2 });
+  res.status(200).json({ parsed, imageBase64, response2 });
 }
