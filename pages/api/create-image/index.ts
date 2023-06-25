@@ -5,10 +5,11 @@ import { NFTStorage, File } from 'nft.storage';
 const client = new NFTStorage({ token: process.env.NFT_STORAGE_API_KEY });
 
 export default async function handler(req, res) {
-    const { imageBase64, text } = req.body;
+    const { collectorImage, text, musicianImage } = req.body;
 
     // Convert the base64 string back to a buffer
-    const imageBuffer = Buffer.from(imageBase64, 'base64');
+    const imageBuffer = Buffer.from(collectorImage, 'base64');
+    const musicianImageBuffer = Buffer.from(musicianImage, 'base64');
 
     // Create a canvas and a context
     const canvas = createCanvas(1600, 900);
@@ -18,7 +19,7 @@ export default async function handler(req, res) {
     ctx.fillStyle = '#3d7267';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Load the image onto the canvas, centered vertically on the left side
+    // Load the collectorImage onto the canvas, centered vertically on the left side
     const img = new Image();
     img.src = imageBuffer;
     const imgWidth = 400; // update if needed
@@ -29,14 +30,37 @@ export default async function handler(req, res) {
     // Save the current state
     ctx.save();
 
-    // Clip the image as a circle
+    // Clip the collectorImage as a circle
     ctx.beginPath();
     ctx.arc(imgX + imgWidth / 2, imgY + imgHeight / 2, imgWidth / 2, 0, Math.PI * 2, true);
     ctx.closePath();
     ctx.clip();
 
-    // Draw the image
+    // Draw the collectorImage
     ctx.drawImage(img, imgX, imgY, imgWidth, imgHeight);
+
+    // Reset clipping region
+    ctx.restore();
+
+    // Load the musicianImage and draw it on the bottom right corner of the collectorImage
+    const musicianImg = new Image();
+    musicianImg.src = musicianImageBuffer;
+    const musicianImgWidth = 150; // update if needed
+    const musicianImgHeight = 150; // update if needed
+    const musicianImgX = imgX + imgWidth + 50 - musicianImgWidth; // bottom right corner of collectorImage
+    const musicianImgY = imgY + imgHeight - musicianImgHeight; // bottom right corner of collectorImage
+
+    // Save the current state
+    ctx.save();
+
+    // Clip the musicianImage as a circle
+    ctx.beginPath();
+    ctx.arc(musicianImgX + musicianImgWidth / 2, musicianImgY + musicianImgHeight / 2, musicianImgWidth / 2, 0, Math.PI * 2, true);
+    ctx.closePath();
+    ctx.clip();
+
+    // Draw the musicianImage
+    ctx.drawImage(musicianImg, musicianImgX, musicianImgY, musicianImgWidth, musicianImgHeight);
 
     // Reset clipping region
     ctx.restore();

@@ -23,7 +23,7 @@ export default async function handler(req, res) {
 
   // Call the /api/create-gif endpoint to create the GIF and upload it to nft.storage
   try {
-    const response2 = await axios.post(`${appUrl}/api/create-image`, { imageBase64: collectorImageBase64, text: '#1 Top Collector', musicianImageBase64 });
+    const response2 = await axios.post(`${appUrl}/api/create-image`, { collectorImage: collectorImageBase64, text: '#1 Top Collector', musicianImage: musicianImageBase64 });
     const { cid } = response2.data;
     console.log('Handler function finished', cid);
     res.status(200).json({ cid });
