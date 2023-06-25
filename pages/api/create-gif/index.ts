@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     const imageBuffer = Buffer.from(imageBase64, 'base64');
 
     // Create a canvas and a context
-    const canvas = createCanvas(500, 500);
+    const canvas = createCanvas(1000, 1000);
     const ctx = canvas.getContext('2d');
 
     // Load the image onto the canvas
@@ -21,7 +21,7 @@ export default async function handler(req, res) {
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
     // Create a GIFEncoder
-    const encoder = new GIFEncoder(500, 500);
+    const encoder = new GIFEncoder(1000, 1000);
     const stream = encoder.createReadStream();
     encoder.start();
     encoder.setRepeat(0);
