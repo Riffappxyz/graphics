@@ -6,11 +6,21 @@ import getAppUrl from 'utils/getAppUrl';
 const client = new NFTStorage({ token: process.env.NFT_STORAGE_API_KEY });
 
 export default async function handler(req, res) {
-    const { collectorImage, text, musicianImage, collectorName, musicianName, albumImageStrings } = req.body;
+    const { collectorSrc, text, musicianSrc, collectorName, musicianName, albumImageStrings } = req.body;
 
+    console.log("SWEETS req.body create-image", req.body)
+  const imgBase = "https://nftstorage.link/ipfs/"
+
+  const fallbackPic = imgBase + "Qmecvfw8J8eRNwDNhtsqr7dGSKJVa31JPbvx8hBm3dWidh";
+  const appUrl = getAppUrl()
+
+    // Call the /api/process-image endpoint to fetch and process the image
+    let processImgResponse = await fetch(`${appUrl}/api/process-image?url=${encodeURIComponent(collectorSrc || fallbackPic)}`);
+    const collectorImage = await processImgResponse.text();
+    processImgResponse = await fetch(`${appUrl}/api/process-image?url=${encodeURIComponent(musicianSrc || fallbackPic)}`);
+    const musicianImage = await processImgResponse.text();
     const albumImages = []
-    const appUrl = getAppUrl()
-    let processImgResponse = await fetch(`${appUrl}/api/process-image?url=${encodeURIComponent(albumImageStrings[0])}`);
+    processImgResponse = await fetch(`${appUrl}/api/process-image?url=${encodeURIComponent(albumImageStrings[0])}`);
     let albumImageBase64 = await processImgResponse.text();
     albumImages.push(albumImageBase64)
     processImgResponse = await fetch(`${appUrl}/api/process-image?url=${encodeURIComponent(albumImageStrings[1])}`);
